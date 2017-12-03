@@ -80,8 +80,23 @@ class Boid(pygame.sprite.Sprite):
         # set our velocity towards the others
        
         self.velocityX -= (avgX / 100) 
-        self.velocityY -= (avgY / 100) 
-        
+        self.velocityY -= (avgY / 100)
+
+
+    def moveCloserPlayer(self, pig):
+        # calculate the average distances from the other boids
+        avgX = 0
+        avgY = 0
+
+        avgX += (self.x - pig.x)
+        avgY += (self.y - pig.y)
+
+        # set our velocity towards the others
+
+        self.velocityX -= (avgX / 100)
+        self.velocityY -= (avgY / 100)
+
+
     "Move with a set of boids"
     def moveWith(self, boids):
         if len(boids) < 1: return
@@ -253,6 +268,7 @@ while 1:
                 closeBoids.append(otherBoid)
 
         boid.moveCloser(closeBoids)
+        boid.moveCloserPlayer(pig.rect)
         #boid.move = "MOVINGCLOSER"
         boid.moveWith(closeBoids)
         #boid.move = "MOVEWITH"
