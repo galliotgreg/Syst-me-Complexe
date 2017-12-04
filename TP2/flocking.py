@@ -17,6 +17,8 @@ numMurs = 10
 boids = []
 murs=[]
 
+followPlayer = False
+
 class Pig(pygame.sprite.Sprite):
     def __init__(self, x,y,z):
         super().__init__()
@@ -251,6 +253,8 @@ while 1:
           incX = 20 if event.key in [259, 262, 265] else 0
           decY = 20 if event.key in [263, 264, 265] else 0
           incY = 20 if event.key in [257, 258, 259] else 0
+          if event.key == K_SPACE :
+              followPlayer = not followPlayer
 
           pig.rect.x += incX - decX
           pig.rect.y += incY - decY
@@ -268,7 +272,8 @@ while 1:
                 closeBoids.append(otherBoid)
 
         boid.moveCloser(closeBoids)
-        boid.moveCloserPlayer(pig.rect)
+        if followPlayer :
+            boid.moveCloserPlayer(pig.rect)
         #boid.move = "MOVINGCLOSER"
         boid.moveWith(closeBoids)
         #boid.move = "MOVEWITH"
